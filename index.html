@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VALORANT CASE DROP — Limited Giveaway</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Bebas+Neue&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+
+    <!-- Veritabanı: Node.js şifreli dosya DB (server.js) -->
+    <!-- Firebase kaldırıldı — tüm veri /api/* endpoint'leri üzerinden -->
+</head>
+<body>
+
+<!-- ===== AMBIENT LIGHT ORBS ===== -->
+<div class="ambient">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+</div>
+
+<!-- ===== TILED LOGO BACKGROUND ===== -->
+<div class="bg-grid"></div>
+
+<!-- ===== BOTTOM FIRE ===== -->
+<div class="fire-wrap">
+    <div class="fire-col"><div class="fire-flame"></div></div>
+    <div class="fire-col"><div class="fire-flame"></div></div>
+    <div class="fire-col"><div class="fire-flame"></div></div>
+    <div class="fire-col"><div class="fire-flame"></div></div>
+    <div class="fire-col"><div class="fire-flame"></div></div>
+    <div class="fire-col"><div class="fire-flame"></div></div>
+    <div class="fire-col"><div class="fire-flame"></div></div>
+    <div class="fire-col"><div class="fire-flame"></div></div>
+    <div class="fire-col"><div class="fire-flame"></div></div>
+    <div class="fire-col"><div class="fire-flame"></div></div>
+    <div class="fire-col"><div class="fire-flame"></div></div>
+    <div class="fire-col"><div class="fire-flame"></div></div>
+    <div class="fire-col"><div class="fire-flame"></div></div>
+    <div class="fire-col"><div class="fire-flame"></div></div>
+    <div class="fire-col"><div class="fire-flame"></div></div>
+    <div class="fire-col"><div class="fire-flame"></div></div>
+</div>
+
+<!-- ===== TOPBAR ===== -->
+<nav class="topbar">
+    <div class="topbar-logo">
+        <svg class="logo-v" viewBox="0 0 60 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M0 0L20 0L30 40L40 0L60 0L45 50L15 50Z" fill="#ff4655"/>
+        </svg>
+        <span class="logo-text">CASEDROP</span>
+    </div>
+    <div class="topbar-nav" id="nav-buttons">
+        <button class="topbar-btn ghost" id="btn-login-modal">GİRİŞ YAP</button>
+        <button class="topbar-btn accent" id="btn-register-modal">KAYIT OL</button>
+        <button class="topbar-btn admin-btn hidden" id="btn-admin-modal">⚙ ADMİN</button>
+        <!-- Clickable user pill → opens profile modal -->
+        <div class="user-pill hidden" id="user-greeting" role="button" style="cursor:pointer">
+            <span class="user-avatar">V</span>
+            <span class="user-name">Kullanıcı</span>
+        </div>
+        <button class="topbar-btn ghost hidden" id="btn-logout">ÇIKIŞ</button>
+    </div>
+</nav>
+
+<!-- ===== HERO TITLE ===== -->
+<div class="hero">
+    <div class="hero-badge">🔥 SINIRLI SÜRE</div>
+    <h1 class="hero-title">
+        <span class="title-line1">LIMITED</span>
+        <span class="title-line2">GIVEAWAY</span>
+    </h1>
+    <p class="hero-sub">Valorant'ın en değerli skinlerini ücretsiz kazan</p>
+    <div class="hero-divider"></div>
+</div>
+
+<!-- ===== CATEGORY TABS ===== -->
+<div class="tabs-container">
+    <nav class="tabs" id="category-tabs">
+        <button class="tab-btn active" data-category="vandal"><span class="tab-icon">⚡</span>VANDAL</button>
+        <button class="tab-btn" data-category="phantom"><span class="tab-icon">👻</span>PHANTOM</button>
+        <button class="tab-btn" data-category="operator"><span class="tab-icon">🎯</span>OPERATOR</button>
+        <button class="tab-btn" data-category="knife"><span class="tab-icon">🔪</span>BIÇAK</button>
+    </nav>
+</div>
+
+<!-- ===== ROULETTE ===== -->
+<div class="case-section">
+    <div class="roulette-frame">
+        <div class="roulette-vignette"></div>
+        <div class="center-marker">
+            <div class="marker-arrow top"></div>
+            <div class="marker-line"></div>
+            <div class="marker-arrow bottom"></div>
+        </div>
+        <div class="roulette-window">
+            <div class="roulette-track" id="roulette-track"></div>
+        </div>
+    </div>
+    <button id="open-btn" class="open-btn">
+        <span class="btn-shimmer"></span>
+        <span class="btn-label">KASAYI AÇ</span>
+        <span class="btn-sub">ücretsiz &bull; sınırsız</span>
+    </button>
+</div>
+
+<!-- ===== WIN OVERLAY ===== -->
+<div id="result" class="overlay-hidden">
+    <div class="win-backdrop"></div>
+    <div class="win-card">
+        <div class="win-sparks" id="win-sparks"></div>
+        <div class="win-badge">KAZANDIN!</div>
+        <div class="win-image-wrap">
+            <img src="" alt="" id="result-image" class="win-img" style="display:none;">
+            <div class="win-icon-fallback" id="result-icon">🏆</div>
+        </div>
+        <h2 id="result-text" class="win-title"></h2>
+        <p class="win-sub">Bu skini almak için bizimle iletişime geç</p>
+        <button class="win-close-btn" id="win-close">TEKRAR DENE</button>
+    </div>
+</div>
+
+<!-- ===== AUTH MODAL ===== -->
+<div id="auth-modal" class="modal">
+    <div class="modal-glass">
+        <button class="modal-close" id="close-auth">✕</button>
+        <div class="modal-header">
+            <div class="modal-logo">V</div>
+            <h2 id="auth-title">Giriş Yap</h2>
+            <p id="auth-subtitle">Hesabına giriş yap</p>
+        </div>
+        <form id="auth-form" class="modal-form">
+            <div class="input-group">
+                <label>E-POSTA</label>
+                <input type="email" id="auth-email" placeholder="ornek@email.com" required>
+            </div>
+            <div class="input-group">
+                <label>ŞİFRE</label>
+                <div style="position: relative; width: 100%;">
+                    <input type="password" id="auth-password" placeholder="••••••••" required style="padding-right: 44px;">
+                    <button type="button" id="toggle-auth-pass" title="Şifreyi Göster/Gizle" style="position: absolute; right: 12px; top: 50%; transform: translateY(-50%); background: none; border: none; cursor: pointer; color: #6b7280; display: flex; align-items: center; justify-content: center; padding: 4px;">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                            <circle cx="12" cy="12" r="3"></circle>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+            <div id="register-fields" class="hidden">
+                <div class="input-group">
+                    <label>REFERANS KODU <span style="color:#555;font-weight:400">(isteğe bağlı)</span></label>
+                    <input type="text" id="auth-refcode" placeholder="Admin kodunuz varsa girin">
+                </div>
+            </div>
+            <p id="auth-error" class="error-msg"></p>
+            <button type="submit" class="modal-submit" id="auth-submit">GİRİŞ YAP</button>
+            <p class="toggle-text" id="toggle-auth">Hesabın yok mu? <span class="toggle-link">Kayıt Ol</span></p>
+        </form>
+    </div>
+</div>
+
+<!-- ===== PROFİL MODAL ===== -->
+<div id="profile-modal" class="modal">
+    <div class="modal-glass profile-glass">
+        <button class="modal-close" id="close-profile">✕</button>
+        <div class="modal-header">
+            <div class="profile-avatar-lg" id="profile-avatar-lg">V</div>
+            <h2 id="profile-username">Kullanıcı</h2>
+            <p id="profile-email-display" style="color:#6b7280; font-size:0.85rem;"></p>
+        </div>
+
+        <!-- Riot Bağlama -->
+        <div class="riot-connect-card" id="riot-connect-card">
+            <div class="riot-connect-left">
+                <!-- Riot Games Logo -->
+                <div class="riot-logo-wrap">
+                    <img src="riotlogo.jpeg" alt="Riot Games" class="riot-logo-svg" style="object-fit:cover;">
+                </div>
+                <div class="riot-connect-info">
+                    <span class="riot-connect-label">RIOT GAMES GİRİŞİ</span>
+                    <span class="riot-connect-desc" id="riot-status-text">Eşyayı içeri aktarmak için hesabını bağla</span>
+                </div>
+            </div>
+            <div class="riot-connect-right">
+                <button class="riot-connect-btn" id="riot-connect-btn">
+                    <span id="riot-btn-text">BAĞLA</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Riot bağlı ise kullanıcı adı -->
+        <div class="riot-linked-info hidden" id="riot-linked-info">
+            <div class="riot-linked-row">
+                <span class="riot-linked-label">Riot ID</span>
+                <span class="riot-linked-value" id="riot-linked-name">—</span>
+            </div>
+            <div class="riot-linked-row">
+                <span class="riot-linked-label">Bölge</span>
+                <span class="riot-linked-value" id="riot-linked-region">—</span>
+            </div>
+        </div>
+
+        <!-- Riot giriş formu (connect tıklayınca açılır) -->
+        <div class="riot-form-wrap hidden" id="riot-form-wrap">
+            <div class="input-group">
+                <label>RIOT KULLANICI ADI</label>
+                <input type="text" id="riot-username-input" placeholder="Kullaniciadi#TR1">
+            </div>
+            <div class="input-group">
+                <label>BÖLGE</label>
+                <select id="riot-region-input">
+                    <option value="TR">TR — Türkiye</option>
+                    <option value="EUW">EUW — Batı Avrupa</option>
+                    <option value="EUNE">EUNE — Kuzey Avrupa</option>
+                    <option value="NA">NA — Kuzey Amerika</option>
+                    <option value="BR">BR — Brezilya</option>
+                </select>
+            </div>
+            <p id="riot-link-error" class="error-msg"></p>
+            <button class="modal-submit" id="riot-link-save" style="margin-top:8px;">HESABI BAĞLA</button>
+            <button class="cancel-link-btn" id="riot-link-cancel">İptal</button>
+        </div>
+
+        <div class="profile-footer">
+            <button class="topbar-btn ghost" id="profile-logout-btn" style="width:100%; margin-top:1rem;">ÇIKIŞ YAP</button>
+        </div>
+    </div>
+</div>
+
+<!-- ===== ADMIN MODAL ===== -->
+<div id="admin-modal" class="modal">
+    <div class="modal-glass admin-glass">
+        <button class="modal-close" id="close-admin">✕</button>
+        <div class="modal-header">
+            <div class="modal-logo" style="background: linear-gradient(135deg,#7f5af0,#2cb67d);">⚙</div>
+            <h2>Admin Paneli</h2>
+            <p>Çark eşyalarını buradan yönet</p>
+        </div>
+        <form id="admin-form" class="modal-form">
+            <div class="admin-row">
+                <div class="input-group">
+                    <label>KATEGORİ</label>
+                    <select id="admin-category" required>
+                        <option value="vandal">Vandal</option>
+                        <option value="phantom">Phantom</option>
+                        <option value="operator">Operator</option>
+                        <option value="knife">Bıçak</option>
+                    </select>
+                </div>
+                <div class="input-group">
+                    <label>NADİRLİK</label>
+                    <select id="admin-rarity" required>
+                        <option value="gold">Gold — Efsanevi</option>
+                        <option value="red">Red — Destansı</option>
+                        <option value="purple">Purple — Nadir</option>
+                        <option value="pink">Pink — Özel</option>
+                    </select>
+                </div>
+            </div>
+            <div class="input-group">
+                <label>EŞYA ADI</label>
+                <input type="text" id="admin-name" placeholder="Reaver Vandal" required>
+            </div>
+            <div class="input-group">
+                <label>RESİM URL'Sİ</label>
+                <input type="url" id="admin-image" placeholder="https://...">
+            </div>
+            <button type="submit" class="modal-submit">EKLE</button>
+            <p id="admin-msg" class="success-msg"></p>
+        </form>
+        <div class="admin-list-wrap">
+            <h3 class="admin-list-title">MEVCUT EŞYALAR</h3>
+            <ul id="items-ul" class="admin-list"></ul>
+        </div>
+    </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>

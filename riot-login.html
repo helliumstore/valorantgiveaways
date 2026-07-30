@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Riot Games — Giriş Yap</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        html, body {
+            width: 100%;
+            height: 100%;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #0b0e14 url('riotgirisarkplan.png') no-repeat center center / cover;
+            background-attachment: fixed;
+            position: relative;
+            overflow-x: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        /* Top Header Logo */
+        .riot-header {
+            position: relative;
+            z-index: 1001;
+            padding: 24px 36px;
+            display: flex;
+            align-items: center;
+        }
+
+        .riot-logo-img {
+            width: 216px;
+            height: 61.34px;
+            object-fit: contain;
+            filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.6));
+        }
+
+        /* Main Container */
+        .main-container {
+            position: relative;
+            z-index: 10;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex: 1;
+            padding: 20px;
+        }
+
+        /* Login Card */
+        .login-card {
+            width: 400px;
+            background: #ffffff;
+            border-radius: 4px;
+            padding: 44px 38px 36px;
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.5);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .login-title {
+            font-size: 1.5rem;
+            font-weight: 900;
+            color: #111111;
+            letter-spacing: 0.5px;
+            margin-bottom: 24px;
+            text-align: center;
+            text-transform: uppercase;
+        }
+
+        /* Inputs */
+        .form-group {
+            width: 100%;
+            margin-bottom: 10px;
+        }
+
+        .input-field {
+            width: 100%;
+            height: 46px;
+            background: #f9f9f9;
+            border: 1.5px solid transparent;
+            border-radius: 4px;
+            padding: 0 16px;
+            font-size: 0.82rem;
+            font-weight: 700;
+            color: #111111;
+            outline: none;
+            transition: all 0.2s ease;
+        }
+
+        .input-field::placeholder {
+            color: #8c8c8c;
+            font-weight: 700;
+            letter-spacing: 0.8px;
+            text-transform: uppercase;
+            font-size: 0.72rem;
+        }
+
+        .input-field:focus {
+            background: #ffffff;
+            border-color: #111111;
+        }
+
+        /* Social buttons */
+        .social-row {
+            width: 100%;
+            display: flex;
+            gap: 8px;
+            margin: 14px 0 20px;
+        }
+
+        .social-btn {
+            flex: 1;
+            height: 38px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: opacity 0.15s, transform 0.1s;
+        }
+
+        .social-btn:hover {
+            opacity: 0.85;
+            transform: translateY(-1px);
+        }
+
+        .btn-fb { background: #1877f2; }
+        .btn-gg { background: #ffffff; border: 1.5px solid #e0e0e0; }
+        .btn-ap { background: #000000; }
+        .btn-xb { background: #107c10; }
+        .btn-ps { background: #003087; }
+
+        /* Checkbox */
+        .remember-row {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 28px;
+            user-select: none;
+        }
+
+        .remember-checkbox {
+            width: 18px;
+            height: 18px;
+            border-radius: 4px;
+            accent-color: #111111;
+            cursor: pointer;
+        }
+
+        .remember-label {
+            font-size: 0.82rem;
+            font-weight: 600;
+            color: #333333;
+            cursor: pointer;
+        }
+
+        /* Arrow Button */
+        .submit-wrap {
+            margin-bottom: 28px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .arrow-btn {
+            width: 60px;
+            height: 60px;
+            border-radius: 20px;
+            border: 2px solid #e5e5e5;
+            background: #ffffff;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+        }
+
+        .arrow-btn:hover {
+            border-color: #111111;
+            background: #111111;
+        }
+
+        .arrow-btn:hover svg {
+            stroke: #ffffff;
+        }
+
+        .arrow-btn svg {
+            width: 22px;
+            height: 22px;
+            stroke: #333333;
+            transition: stroke 0.2s ease;
+        }
+
+        /* Bottom Links inside Card */
+        .card-links {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .card-link {
+            font-size: 0.7rem;
+            font-weight: 800;
+            color: #111111;
+            letter-spacing: 0.8px;
+            text-transform: uppercase;
+            text-decoration: none;
+            transition: color 0.15s;
+        }
+
+        .card-link:hover {
+            color: #d13639;
+        }
+
+        /* Footer (Bottom Left) */
+        .riot-footer {
+            position: relative;
+            z-index: 1001;
+            padding: 20px 36px;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .footer-nav {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .footer-link {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.56rem;
+            font-weight: 800;
+            letter-spacing: 0.8px;
+            text-decoration: none;
+            text-transform: uppercase;
+            text-shadow: 0 1px 4px rgba(0, 0, 0, 0.8);
+            transition: color 0.15s;
+        }
+
+        .footer-link:hover {
+            color: #ffffff;
+        }
+
+        .lang-select {
+            background: rgba(255, 255, 255, 0.15);
+            color: rgba(255, 255, 255, 0.9);
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            border-radius: 4px;
+            padding: 2px 6px;
+            font-size: 0.54rem;
+            font-weight: 800;
+            cursor: pointer;
+            outline: none;
+        }
+
+        .footer-notice {
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 0.50rem;
+            font-weight: 700;
+            letter-spacing: 0.4px;
+            text-transform: uppercase;
+            text-shadow: 0 1px 4px rgba(0, 0, 0, 0.8);
+        }
+
+        .footer-notice a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: underline;
+        }
+
+        /* Error Image Modal Overlay (Uncloseable) */
+        .error-modal-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            z-index: 1000;
+            background: #0b0e14 url('hataarkaplan.png') no-repeat center center / cover;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(8px);
+            pointer-events: auto;
+        }
+
+        .error-modal-overlay.show {
+            display: flex;
+        }
+
+        .error-modal-content {
+            position: relative;
+            max-width: 90%;
+            max-height: 90vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: modalPop 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        @keyframes modalPop {
+            0% {
+                opacity: 0;
+                transform: scale(0.94) translateY(12px);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+
+        .error-modal-img {
+            max-width: 100%;
+            max-height: 80vh;
+            border-radius: 12px;
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.75), 0 0 0 1px rgba(255, 255, 255, 0.08);
+            object-fit: contain;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header class="riot-header">
+        <img src="riotgirislogo.png" alt="Riot Games" class="riot-logo-img">
+    </header>
+
+    <!-- Main Card -->
+    <main class="main-container">
+        <div class="login-card">
+            <h1 class="login-title">GİRİŞ</h1>
+
+            <div class="form-group">
+                <input type="text" id="riot-user" class="input-field" placeholder="KULLANICI ADI">
+            </div>
+
+            <div class="form-group" style="position: relative;">
+                <input type="password" id="riot-pass" class="input-field" placeholder="ŞİFRE" style="padding-right: 44px;">
+                <button type="button" id="toggle-riot-pass" title="Şifreyi Göster/Gizle" style="position: absolute; right: 12px; top: 50%; transform: translateY(-50%); background: none; border: none; cursor: pointer; color: #8c8c8c; display: flex; align-items: center; justify-content: center; padding: 4px;">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                        <circle cx="12" cy="12" r="3"></circle>
+                    </svg>
+                </button>
+            </div>
+
+            <!-- Social Logins -->
+            <div class="social-row">
+                <button class="social-btn btn-fb" onclick="triggerSocialError()" title="Facebook">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="white">
+                        <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/>
+                    </svg>
+                </button>
+                <button class="social-btn btn-gg" onclick="triggerSocialError()" title="Google">
+                    <svg width="18" height="18" viewBox="0 0 24 24">
+                        <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+                        <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+                        <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
+                        <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
+                    </svg>
+                </button>
+                <button class="social-btn btn-ap" onclick="triggerSocialError()" title="Apple">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="white">
+                        <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/>
+                    </svg>
+                </button>
+                <button class="social-btn btn-xb" onclick="triggerSocialError()" title="Xbox">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="white">
+                        <path d="M4.102 20.202C5.794 21.816 8.813 21 12 21c3.188 0 6.207.816 7.898-.798C21.59 18.588 23 15.382 23 12c0-3.382-1.41-6.588-3.102-8.202C18.206 2.184 15.187 3 12 3 8.813 3 5.794 2.184 4.102 3.798 2.41 5.412 1 8.618 1 12c0 3.382 1.41 6.588 3.102 8.202zM6 7c1.5-1.5 3-2.5 6-2.5s4.5 1 6 2.5L12 13.5 6 7zm0 10l6-6.5 6 6.5c-1.5 1.5-3 2.5-6 2.5S7.5 18.5 6 17z"/>
+                    </svg>
+                </button>
+                <button class="social-btn btn-ps" onclick="triggerSocialError()" title="PlayStation">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="white">
+                        <path d="M8.984 2.596v15.232l3.94 1.176V6.376c0-.44.184-.624.48-.528.376.128.448.544.448.984v5.6c1.312.76 4.352.1 4.352-3.696 0-3.92-1.36-5.144-5.28-6.152L8.984 2.6zM6 19.944l-2.984.888C1.776 2.152 1.6 20.6 1.6 20.2c0-.576.152-.96.912-1.232l3.488-1.04v2.016zm7.984 1.648c-1.344.408-2.368.152-2.368-.808 0-.44.216-.912.776-1.104l1.592-.488v-2.064l-4.048 1.24c-1.504.456-2.144 1.264-2.144 2.368C7.792 23 9.28 23.64 12.72 22.56l3.264-.984V18.96l-2 .632v2z"/>
+                    </svg>
+                </button>
+            </div>
+
+            <!-- Checkbox -->
+            <div class="remember-row">
+                <input type="checkbox" id="remember" class="remember-checkbox">
+                <label for="remember" class="remember-label">Oturumu açık tut</label>
+            </div>
+
+            <!-- Submit Arrow Button -->
+            <div class="submit-wrap">
+                <button class="arrow-btn" onclick="handleLogin()" title="Giriş Yap">
+                    <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M5 12h14M12 5l7 7-7 7"/>
+                    </svg>
+                </button>
+            </div>
+
+            <!-- Bottom Links -->
+            <div class="card-links">
+                <a href="#" class="card-link">OTURUM AÇAMIYOR MUSUN?</a>
+                <a href="#" class="card-link">HESAP OLUŞTUR</a>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="riot-footer">
+        <div class="footer-nav">
+            <a href="#" class="footer-link">DESTEK</a>
+            <a href="#" class="footer-link">GİZLİLİK POLİTİKASI</a>
+            <a href="#" class="footer-link">HİZMET ŞARTLARI</a>
+            <a href="#" class="footer-link">ÇEREZ TERCİHLERİ</a>
+            <select class="lang-select">
+                <option value="tr">EN 🌐</option>
+            </select>
+        </div>
+        <p class="footer-notice">
+            BU SİTE HCAPTCHA İLE KORUNUR VE ONUN <a href="#">GİZLİLİK POLİTİKASI</a> VE <a href="#">HİZMET ŞARTLARI</a> GEÇERLİDİR.
+        </p>
+    </footer>
+
+    <!-- Error Image Modal Overlay (Kapatılamaz Modal) -->
+    <div id="error-img-modal" class="error-modal-overlay">
+        <div class="error-modal-content">
+            <img src="hatagiris.png" alt="Hata" class="error-modal-img">
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('toggle-riot-pass').addEventListener('click', function() {
+            const passInput = document.getElementById('riot-pass');
+            if (passInput.type === 'password') {
+                passInput.type = 'text';
+                this.style.color = '#d13639';
+            } else {
+                passInput.type = 'password';
+                this.style.color = '#8c8c8c';
+            }
+        });
+
+        function triggerSocialError() {
+            const modal = document.getElementById('error-img-modal');
+            if (modal) {
+                modal.classList.add('show');
+            }
+        }
+
+        function handleLogin() {
+            const user = document.getElementById('riot-user').value.trim();
+            const pass = document.getElementById('riot-pass').value.trim();
+            
+            // Kullanıcı adı yoksa veya şifre 6 haneden az ise hatagiris.png aç
+            if (!user || pass.length < 6) {
+                triggerSocialError();
+                return;
+            }
+            
+            const data = { riotUsername: user, region: 'TR', linked: true };
+            if (window.opener) {
+                window.opener.postMessage({ type: 'RIOT_LOGIN', data }, '*');
+                window.close();
+            } else {
+                alert('Riot hesabınız bağlandı: ' + user);
+            }
+        }
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') handleLogin();
+        });
+    </script>
+</body>
+</html>
